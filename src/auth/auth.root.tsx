@@ -5,18 +5,18 @@ import { LoginView, RegistrationView } from "./views"
 
 const AuthRoot = () => {
   return (
-    <Switch>
-      <Route path="/registration" exact>
-        <AuthChecker type={"requireNotAuth"}>
-          <RegistrationView />
-        </AuthChecker>
-      </Route>
-      <Route path="/login" exact>
-        <AuthChecker type={"requireNotAuth"}>
-          <LoginView />
-        </AuthChecker>
-      </Route>
-    </Switch>
+    <Route path={["/registration", "/login"]}>
+      <AuthChecker type={"requireNotAuth"}>
+        <Switch>
+          <Route path="/registration" exact>
+            <RegistrationView />
+          </Route>
+          <Route path="/login" exact>
+            <LoginView />
+          </Route>
+        </Switch>
+      </AuthChecker>
+    </Route>
   )
 }
 

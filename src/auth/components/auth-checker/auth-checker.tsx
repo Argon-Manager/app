@@ -10,7 +10,6 @@ type Props = {
 const AuthChecker = ({ children, type }: Props) => {
   const { isAuth } = useAuth()
 
-  console.log(isAuth)
   if (!isAuth && type === "requireAuth") {
     return <Redirect to={"/login"} />
   }
