@@ -1,11 +1,14 @@
 import React from "react"
-import { ApolloProvider, AppRouter, ThemeProvider } from "./app"
+import { ApolloProvider, AppRoot, ThemeProvider } from "./app"
+import { AuthProvider } from "./auth"
 
 const Root = () => {
   return (
     <ApolloProvider>
       <ThemeProvider>
-        <AppRouter />
+        <AuthProvider>
+          <AppRoot />
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   )

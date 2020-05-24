@@ -1,42 +1,20 @@
-import React from "react"
-import { useForm } from "react-hook-form"
-import { Button, Input, Title, Typography } from "../../app"
+import React, { useCallback } from "react"
 import { useRegisterMutation } from "../../generated/graphql"
-
-type FormData = { email: string; password: string }
+import { AuthForm } from "../components"
+import { FormData } from "../components/auth-form/types"
+import { useAuth } from "../lib"
 
 const RegistrationView = () => {
-  const { register, handleSubmit } = useForm<FormData>()
+  const { setAuth } = useAuth()
 
-  const [registerMutate] = useRegisterMutation()
+  const [registerMutation] = useRegisterMutation()
 
-  return (
-    <form
-      style={{ margin: "50px 50px" }}
-      onSubmit={handleSubmit(async (values) => {
-        await registerMutate({ variables: { input: values } })
-      })}
-    >
-      <Title level="h2">Registration</Title>
-      <Typography>Register to use full capabilities of service.</Typography>
-      <Input
-        name={"email"}
-        label={"Email"}
-        placeholder={"developer@gmail.com"}
-        inputRef={register}
-      />
-      <Input
-        name={"password"}
-        label={"Password"}
-        placeholder={"jsdfi(787e"}
-        type={"password"}
-        inputRef={register}
-      />
-      <Button variant={"submit"} type={"submit"}>
-        Sign Up
-      </Button>
-    </form>
-  )
+  const handleSubmit = useCallback(async (values: FormData) => {
+    const { data } = await registerMutation({ variables: { input: values } })
+    data && setAuth(data?.register!)
+  }, [])
+
+  return <AuthForm onSubmit={handleSubmit} />
 }
 
 export default RegistrationView
