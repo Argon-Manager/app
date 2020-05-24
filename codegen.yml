@@ -1,0 +1,17 @@
+overwrite: true
+schema: "http://localhost:3100"
+documents: "src/**/*.graphql"
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  src/generated/graphql.tsx:
+    config:
+      withHooks: true
+      withComponent: false
+      withHOC: false
+      reactApolloVersion: 3
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

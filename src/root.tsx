@@ -1,11 +1,13 @@
 import React from "react"
-import { AppRouter, ThemeProvider } from "./app"
+import { ApolloProvider, AppRouter, ThemeProvider } from "./app"
 
 const Root = () => {
   return (
-    <ThemeProvider>
-      <AppRouter />
-    </ThemeProvider>
+    <ApolloProvider>
+      <ThemeProvider>
+        <AppRouter />
+      </ThemeProvider>
+    </ApolloProvider>
   )
 }
 
