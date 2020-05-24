@@ -1,1 +1,1 @@
-export { default as Root } from "./root"
+export { default as ThemeProvider } from "./theme-provider"
