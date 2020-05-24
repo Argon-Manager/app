@@ -1,15 +1,20 @@
 import React from "react"
 import { Route, Switch } from "react-router-dom"
+import { AuthChecker } from "./components"
 import { LoginView, RegistrationView } from "./views"
 
 const AuthRoot = () => {
   return (
     <Switch>
       <Route path="/registration" exact>
-        <RegistrationView />
+        <AuthChecker type={"requireNotAuth"}>
+          <RegistrationView />
+        </AuthChecker>
       </Route>
       <Route path="/login" exact>
-        <LoginView />
+        <AuthChecker type={"requireNotAuth"}>
+          <LoginView />
+        </AuthChecker>
       </Route>
     </Switch>
   )

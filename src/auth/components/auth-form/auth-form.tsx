@@ -18,6 +18,7 @@ const AuthForm = ({ onSubmit, type }: Props) => {
         label={"Email"}
         placeholder={"developer@gmail.com"}
         inputRef={registerInput}
+        fullWidth
       />
       <Input
         name={"password"}
@@ -25,6 +26,7 @@ const AuthForm = ({ onSubmit, type }: Props) => {
         placeholder={"jsdfi(787e"}
         type={"password"}
         inputRef={registerInput}
+        fullWidth
       />
       <Button variant={"submit"} type={"submit"}>
         {type === "registration" && "Sign Up"}

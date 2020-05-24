@@ -19,7 +19,7 @@ const useAuth = () => {
   }
 
   return {
-    isAuth: user && token,
+    isAuth: Boolean(user && token),
     token,
     user,
     setAuth,
