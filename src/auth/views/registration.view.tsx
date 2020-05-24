@@ -1,4 +1,5 @@
 import React, { useCallback } from "react"
+import { Title, Typography } from "../../app/components"
 import { useRegisterMutation } from "../../generated/graphql"
 import { AuthForm } from "../components"
 import { FormData } from "../components/auth-form/types"
@@ -14,7 +15,13 @@ const RegistrationView = () => {
     data && setAuth(data?.register!)
   }, [])
 
-  return <AuthForm onSubmit={handleSubmit} />
+  return (
+    <>
+      <Title level="h2">Registration</Title>
+      <Typography>Register to service and your project start to grow.</Typography>
+      <AuthForm onSubmit={handleSubmit} type={"registration"} />
+    </>
+  )
 }
 
 export default RegistrationView

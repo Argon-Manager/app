@@ -1,19 +1,18 @@
 import React from "react"
 import { useForm } from "react-hook-form"
-import { Button, Input, Title, Typography } from "../../../app/components"
+import { Button, Input } from "../../../app/components"
 import { FormData } from "./types"
 
 type Props = {
   onSubmit: any
+  type: "registration" | "login"
 }
 
-const AuthForm = ({ onSubmit }: Props) => {
+const AuthForm = ({ onSubmit, type }: Props) => {
   const { register: registerInput, handleSubmit } = useForm<FormData>()
 
   return (
-    <form style={{ margin: "50px 50px" }} onSubmit={handleSubmit(onSubmit)}>
-      <Title level="h2">Registration</Title>
-      <Typography>Register to use full capabilities of service.</Typography>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Input
         name={"email"}
         label={"Email"}
@@ -28,7 +27,8 @@ const AuthForm = ({ onSubmit }: Props) => {
         inputRef={registerInput}
       />
       <Button variant={"submit"} type={"submit"}>
-        Sign Up
+        {type === "registration" && "Sign Up"}
+        {type === "login" && "Sign In"}
       </Button>
     </form>
   )

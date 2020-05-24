@@ -28,10 +28,13 @@ export const ButtonWrapper = styled.button<{ variant: Variant }>`
   margin: 1rem 0;
 
   border: none;
+  border-radius: 5px;
 
   cursor: pointer;
 
   transition: background 0.25s;
+
+  letter-spacing: 1px;
 
   ${(props) => styles[props.variant]}
 `
