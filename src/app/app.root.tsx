@@ -5,13 +5,13 @@ import { Main } from "./components"
 
 const AppRoot = () => {
   return (
-    <Main>
-      <Router>
+    <Router>
+      <Main>
         <Switch>
           <AuthRoot />
         </Switch>
-      </Router>
-    </Main>
+      </Main>
+    </Router>
   )
 }
 
