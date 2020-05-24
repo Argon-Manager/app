@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react"
+import GlobalStyle from "./global-style";
+import ThemeProvider from "./theme-provider"
 
 const Root = () => {
-  return (
-      <div>
-        Root
-      </div>
-  );
-};
+  return <ThemeProvider>
+    <GlobalStyle />
+    Root
+  </ThemeProvider>
+}
 
-export default Root;
+export default Root
