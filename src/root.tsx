@@ -6,7 +6,7 @@ const Root = () => {
   return (
     <ApolloProvider>
       <ThemeProvider>
-        <AuthProvider>
+        <AuthProvider initialValue={{ token: localStorage.getItem("token") ?? undefined }}>
           <AppRoot />
         </AuthProvider>
       </ThemeProvider>

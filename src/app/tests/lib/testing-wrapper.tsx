@@ -5,7 +5,7 @@ import { ThemeProvider } from "../../components"
 
 type Props = {
   children: ReactNode
-  apolloConfig: MockedProviderProps
+  apolloConfig?: MockedProviderProps
 }
 
 const TestingWrapper = ({ children, apolloConfig }: Props) => {
