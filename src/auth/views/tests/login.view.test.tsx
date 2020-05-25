@@ -3,11 +3,11 @@ import "jest-localstorage-mock"
 import "mutationobserver-shim"
 import React from "react"
 import { TestingWrapper } from "../../../app/tests/lib"
-import { RegisterDocument } from "../../../generated/graphql"
+import { LoginDocument } from "../../../generated/graphql"
 import { AuthProvider } from "../../lib"
-import RegistrationView from "../registration.view"
+import LoginView from "../login.view"
 
-describe("RegistrationView", () => {
+describe("LoginView", () => {
   afterEach(() => {
     cleanup()
   })
@@ -15,7 +15,7 @@ describe("RegistrationView", () => {
   test("submit user credential and set token to localhost", async () => {
     const input = { email: "test@email.com", password: "testpass" }
     const data = {
-      register: {
+      login: {
         token: "mocked-token",
         user: { id: "1", ...input },
       },
@@ -26,7 +26,7 @@ describe("RegistrationView", () => {
           mocks: [
             {
               request: {
-                query: RegisterDocument,
+                query: LoginDocument,
                 variables: { input },
               },
               result: {
@@ -37,7 +37,7 @@ describe("RegistrationView", () => {
         }}
       >
         <AuthProvider>
-          <RegistrationView />
+          <LoginView />
         </AuthProvider>
       </TestingWrapper>
     )
@@ -59,7 +59,7 @@ describe("RegistrationView", () => {
 
     await act(async () => {
       await waitFor(() => {
-        expect(localStorage.__STORE__["token"]).toBe(data.register.token)
+        expect(localStorage.__STORE__["token"]).toBe(data.login.token)
       })
     })
   })
