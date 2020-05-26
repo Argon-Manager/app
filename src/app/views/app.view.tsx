@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 import { AuthChecker, LoginView, RegistrationView, useAuth } from "../../auth"
 import { useMeQuery } from "../../generated/graphql"
 import { ProjectsView } from "../../projects"
-import { Main } from "../components"
+import { AppLayout, GeneralLayout } from "../components"
 
 const AppView = () => {
   const { token, user, setAuth } = useAuth()
@@ -21,9 +21,9 @@ const AppView = () => {
 
   return (
     <Router>
-      <Main>
-        <Switch>
-          <Route path={["/registration", "/login"]}>
+      <Switch>
+        <Route path={["/registration", "/login"]}>
+          <GeneralLayout>
             <AuthChecker type={"requireNotAuth"}>
               <Route path="/registration" exact>
                 <RegistrationView />
@@ -32,17 +32,23 @@ const AppView = () => {
                 <LoginView />
               </Route>
             </AuthChecker>
-          </Route>
-          <Route path={"/projects"} exact>
+          </GeneralLayout>
+        </Route>
+        <Route path={"/"}>
+          <AppLayout>
             <AuthChecker type={"requireAuth"}>
-              <ProjectsView />
+              <Switch>
+                <Route path={"/projects"} exact>
+                  <ProjectsView />
+                </Route>
+                <Route to={"/"} exact>
+                  <Redirect to={"/projects"} />
+                </Route>
+              </Switch>
             </AuthChecker>
-          </Route>
-          <Route to={"/"} exact>
-            <Redirect to={"/projects"} />
-          </Route>
-        </Switch>
-      </Main>
+          </AppLayout>
+        </Route>
+      </Switch>
     </Router>
   )
 }

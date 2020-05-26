@@ -2,7 +2,7 @@ import React, { ReactNode } from "react"
 import { MainWrapper } from "./styles"
 import { Header } from "./header"
 
-const Main = ({ children }: { children: ReactNode }) => {
+const GeneralLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ const Main = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export default Main
+export default GeneralLayout
