@@ -1,1 +1,1 @@
-export { default as ProjectsRoot } from "./projects.root"
+export { ProjectsView } from "./views"

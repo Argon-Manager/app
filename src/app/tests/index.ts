@@ -1,1 +1,1 @@
-export * from "./lib"
+export { TestingWrapper } from "./lib"

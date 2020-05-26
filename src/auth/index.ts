@@ -1,3 +1,3 @@
-export { default as AuthRoot } from "./auth.root"
+export { LoginView, RegistrationView } from "./views"
 export { AuthChecker } from "./components"
-export * from "./lib"
+export { useAuth, AuthProvider } from "./lib"

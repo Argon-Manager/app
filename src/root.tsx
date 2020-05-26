@@ -1,5 +1,5 @@
 import React from "react"
-import { ApolloProvider, AppRoot, ThemeProvider } from "./app"
+import { ApolloProvider, AppView, ThemeProvider } from "./app"
 import { AuthProvider } from "./auth"
 
 const Root = () => {
@@ -7,7 +7,7 @@ const Root = () => {
     <ApolloProvider>
       <ThemeProvider>
         <AuthProvider initialValue={{ token: localStorage.getItem("token") ?? undefined }}>
-          <AppRoot />
+          <AppView />
         </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
