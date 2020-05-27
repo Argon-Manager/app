@@ -1,12 +1,12 @@
 import React from "react"
 import { ApolloProvider, AppView, ThemeProvider } from "./app"
-import { AuthProvider } from "./auth"
+import { AuthProvider, getAuth } from "./auth"
 
 const Root = () => {
   return (
     <ApolloProvider>
       <ThemeProvider>
-        <AuthProvider initialValue={{ token: localStorage.getItem("token") ?? undefined }}>
+        <AuthProvider initialValue={getAuth()}>
           <AppView />
         </AuthProvider>
       </ThemeProvider>

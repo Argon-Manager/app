@@ -1,3 +1,3 @@
 export { LoginView, RegistrationView } from "./views"
 export { AuthChecker } from "./components"
-export { useAuth, AuthProvider } from "./lib"
+export { useAuth, AuthProvider, getAuth } from "./lib"

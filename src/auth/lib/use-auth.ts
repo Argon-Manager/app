@@ -3,6 +3,8 @@ import { Auth } from "../../generated/graphql"
 
 type AuthState = Partial<Omit<Auth, "__typename">>
 
+export const getAuth = (): AuthState => ({ token: localStorage.getItem("token") ?? undefined })
+
 const [useSharedAuth, AuthProvider] = createStateContext<AuthState>({})
 
 const useAuth = () => {
