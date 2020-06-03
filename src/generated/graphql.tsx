@@ -116,6 +116,25 @@ export type RegisterMutation = { __typename?: "Mutation" } & {
     }
 }
 
+export type AuthUserProjectsQueryVariables = {}
+
+export type AuthUserProjectsQuery = { __typename?: "Query" } & {
+  authUserProjects?: Maybe<Array<{ __typename?: "Project" } & ProjectFieldsFragment>>
+}
+
+export type CreateProjectMutationVariables = {
+  input: ProjectInput
+}
+
+export type CreateProjectMutation = { __typename?: "Mutation" } & {
+  createProject: { __typename?: "Project" } & ProjectFieldsFragment
+}
+
+export type ProjectFieldsFragment = { __typename?: "Project" } & Pick<
+  Project,
+  "id" | "name" | "description"
+> & { users?: Maybe<Array<Maybe<{ __typename?: "User" } & UserFieldsFragment>>> }
+
 export type UserFieldsFragment = { __typename?: "User" } & Pick<User, "id" | "email">
 
 export const UserFieldsFragmentDoc = gql`
@@ -123,6 +142,17 @@ export const UserFieldsFragmentDoc = gql`
     id
     email
   }
+`
+export const ProjectFieldsFragmentDoc = gql`
+  fragment ProjectFields on Project {
+    id
+    name
+    description
+    users {
+      ...UserFields
+    }
+  }
+  ${UserFieldsFragmentDoc}
 `
 export const LoginDocument = gql`
   mutation Login($input: LoginInput!) {
@@ -254,4 +284,103 @@ export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMu
 export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RegisterMutation,
   RegisterMutationVariables
+>
+export const AuthUserProjectsDocument = gql`
+  query AuthUserProjects {
+    authUserProjects {
+      ...ProjectFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
+`
+
+/**
+ * __useAuthUserProjectsQuery__
+ *
+ * To run a query within a React component, call `useAuthUserProjectsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuthUserProjectsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAuthUserProjectsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAuthUserProjectsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    AuthUserProjectsQuery,
+    AuthUserProjectsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<AuthUserProjectsQuery, AuthUserProjectsQueryVariables>(
+    AuthUserProjectsDocument,
+    baseOptions
+  )
+}
+export function useAuthUserProjectsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    AuthUserProjectsQuery,
+    AuthUserProjectsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<AuthUserProjectsQuery, AuthUserProjectsQueryVariables>(
+    AuthUserProjectsDocument,
+    baseOptions
+  )
+}
+export type AuthUserProjectsQueryHookResult = ReturnType<typeof useAuthUserProjectsQuery>
+export type AuthUserProjectsLazyQueryHookResult = ReturnType<typeof useAuthUserProjectsLazyQuery>
+export type AuthUserProjectsQueryResult = ApolloReactCommon.QueryResult<
+  AuthUserProjectsQuery,
+  AuthUserProjectsQueryVariables
+>
+export const CreateProjectDocument = gql`
+  mutation CreateProject($input: ProjectInput!) {
+    createProject(input: $input) {
+      ...ProjectFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
+`
+export type CreateProjectMutationFn = ApolloReactCommon.MutationFunction<
+  CreateProjectMutation,
+  CreateProjectMutationVariables
+>
+
+/**
+ * __useCreateProjectMutation__
+ *
+ * To run a mutation, you first call `useCreateProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProjectMutation, { data, loading, error }] = useCreateProjectMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateProjectMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateProjectMutation,
+    CreateProjectMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<CreateProjectMutation, CreateProjectMutationVariables>(
+    CreateProjectDocument,
+    baseOptions
+  )
+}
+export type CreateProjectMutationHookResult = ReturnType<typeof useCreateProjectMutation>
+export type CreateProjectMutationResult = ApolloReactCommon.MutationResult<CreateProjectMutation>
+export type CreateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateProjectMutation,
+  CreateProjectMutationVariables
 >

@@ -17,7 +17,7 @@ const LoginView = () => {
 
   return (
     <>
-      <Title level="h2">Login</Title>
+      <Title variant="h2">Login</Title>
       <Typography>Login to manage your amazing projects.</Typography>
       <AuthForm onSubmit={handleSubmit} type={"login"} />
     </>

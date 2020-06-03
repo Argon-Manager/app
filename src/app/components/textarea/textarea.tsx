@@ -1,5 +1,5 @@
 import React, { ReactNode, Ref } from "react"
-import { Error, InputWrapper, Label } from "./styles"
+import { Error, TextareaWrapper, Label } from "./styles"
 
 type Props = {
   name: string
@@ -7,25 +7,25 @@ type Props = {
   placeholder?: string
   error?: string
   fullWidth?: boolean
-  type?: "text" | "password"
+  rows?: number
   inputRef?: Ref<any>
 }
 
-const Input = ({ label, name, placeholder, error, fullWidth, type, inputRef }: Props) => {
+const Textarea = ({ label, name, placeholder, error, fullWidth, inputRef, rows }: Props) => {
   return (
-    <InputWrapper fullWidth={fullWidth} error={Boolean(error)}>
+    <TextareaWrapper fullWidth={fullWidth} error={Boolean(error)}>
       {label && <Label htmlFor={`input_${name}`}>{label}</Label>}
-      <input
+      <textarea
         name={name}
         ref={inputRef}
-        type={type ?? "text"}
-        id={`input_${name}`}
+        id={`text_${name}`}
         placeholder={placeholder}
+        rows={rows}
         className={error ? "input-error" : ""}
       />
       <Error>{error}</Error>
-    </InputWrapper>
+    </TextareaWrapper>
   )
 }
 
-export default Input
+export default Textarea

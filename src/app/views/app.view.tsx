@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import { AuthChecker, LoginView, RegistrationView, useAuth } from "../../auth"
 import { useMeQuery } from "../../generated/graphql"
-import { ProjectsView } from "../../projects"
+import { ProjectsView, ProjectCreateView } from "../../projects"
 import { AppLayout, GeneralLayout } from "../components"
 
 const AppView = () => {
@@ -35,18 +35,23 @@ const AppView = () => {
           </GeneralLayout>
         </Route>
         <Route path={"/"}>
-          <AppLayout>
-            <AuthChecker type={"requireAuth"}>
+          <AuthChecker type={"requireAuth"}>
+            <AppLayout>
               <Switch>
-                <Route path={"/projects"} exact>
-                  <ProjectsView />
+                <Route path={"/projects"}>
+                  <Route path={"/projects"} exact>
+                    <ProjectsView />
+                  </Route>
+                  <Route path={"/projects/create"} exact>
+                    <ProjectCreateView />
+                  </Route>
                 </Route>
                 <Route to={"/"} exact>
                   <Redirect to={"/projects"} />
                 </Route>
               </Switch>
-            </AuthChecker>
-          </AppLayout>
+            </AppLayout>
+          </AuthChecker>
         </Route>
       </Switch>
     </Router>

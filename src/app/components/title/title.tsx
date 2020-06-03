@@ -3,11 +3,11 @@ import { TitleWrapper } from "./styles"
 
 type Props = {
   children: ReactNode
-  level: "h1" | "h2" | "h3" | "h4"
+  variant: "h1" | "h2" | "h3" | "h4"
 }
 
-const Title = ({ children, level }: Props) => {
-  const element = createElement(level, null, children)
+const Title = ({ children, variant }: Props) => {
+  const element = createElement(variant, null, children)
 
   return <TitleWrapper>{element}</TitleWrapper>
 }

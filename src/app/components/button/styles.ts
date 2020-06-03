@@ -12,7 +12,11 @@ const styles: { [variant in Variant]: string } = {
     }
   `,
   default: `
-    background: #84fff6;
+    background: none;
+    
+    border: 1px solid black;
+    
+    font-weight: 400;
   `,
   action: `
     background: none;

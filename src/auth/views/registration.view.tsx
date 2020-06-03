@@ -17,7 +17,7 @@ const RegistrationView = () => {
 
   return (
     <>
-      <Title level="h2">Registration</Title>
+      <Title variant="h2">Registration</Title>
       <Typography>Register in the service, and your project will begin to grow.</Typography>
       <AuthForm onSubmit={handleSubmit} type={"registration"} />
     </>
