@@ -130,6 +130,12 @@ export type CreateProjectMutation = { __typename?: "Mutation" } & {
   createProject: { __typename?: "Project" } & ProjectFieldsFragment
 }
 
+export type DeleteProjectMutationVariables = {
+  id: Scalars["ID"]
+}
+
+export type DeleteProjectMutation = { __typename?: "Mutation" } & Pick<Mutation, "deleteProject">
+
 export type ProjectFieldsFragment = { __typename?: "Project" } & Pick<
   Project,
   "id" | "name" | "description"
@@ -400,6 +406,50 @@ export type CreateProjectMutationResult = ApolloReactCommon.MutationResult<Creat
 export type CreateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateProjectMutation,
   CreateProjectMutationVariables
+>
+export const DeleteProjectDocument = gql`
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id)
+  }
+`
+export type DeleteProjectMutationFn = ApolloReactCommon.MutationFunction<
+  DeleteProjectMutation,
+  DeleteProjectMutationVariables
+>
+
+/**
+ * __useDeleteProjectMutation__
+ *
+ * To run a mutation, you first call `useDeleteProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProjectMutation, { data, loading, error }] = useDeleteProjectMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProjectMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    DeleteProjectMutation,
+    DeleteProjectMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<DeleteProjectMutation, DeleteProjectMutationVariables>(
+    DeleteProjectDocument,
+    baseOptions
+  )
+}
+export type DeleteProjectMutationHookResult = ReturnType<typeof useDeleteProjectMutation>
+export type DeleteProjectMutationResult = ApolloReactCommon.MutationResult<DeleteProjectMutation>
+export type DeleteProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteProjectMutation,
+  DeleteProjectMutationVariables
 >
 export const ProjectDocument = gql`
   query Project($id: ID!) {

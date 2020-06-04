@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { Project } from "../../../generated/graphql"
+import { Project, useDeleteProjectMutation } from "../../../generated/graphql"
 import { ProjectItemWrapper } from "./styles"
 
 type Props = {
@@ -8,6 +8,8 @@ type Props = {
 }
 
 const ProjectItem = ({ item }: Props) => {
+  const [deleteProjectMutation] = useDeleteProjectMutation()
+
   return (
     <ProjectItemWrapper>
       <header>
@@ -19,6 +21,7 @@ const ProjectItem = ({ item }: Props) => {
           <li>
             <Link to={`/projects/update/${item.id}`}>Update</Link>
           </li>
+          <li onClick={() => deleteProjectMutation({ variables: { id: item.id } })}>Delete</li>
         </ul>
       </div>
     </ProjectItemWrapper>
