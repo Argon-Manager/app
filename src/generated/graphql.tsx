@@ -135,6 +135,23 @@ export type ProjectFieldsFragment = { __typename?: "Project" } & Pick<
   "id" | "name" | "description"
 > & { users?: Maybe<Array<Maybe<{ __typename?: "User" } & UserFieldsFragment>>> }
 
+export type ProjectQueryVariables = {
+  id: Scalars["ID"]
+}
+
+export type ProjectQuery = { __typename?: "Query" } & {
+  project?: Maybe<{ __typename?: "Project" } & ProjectFieldsFragment>
+}
+
+export type UpdateProjectMutationVariables = {
+  id: Scalars["ID"]
+  input: ProjectInput
+}
+
+export type UpdateProjectMutation = { __typename?: "Mutation" } & {
+  updateProject?: Maybe<{ __typename?: "Project" } & ProjectFieldsFragment>
+}
+
 export type UserFieldsFragment = { __typename?: "User" } & Pick<User, "id" | "email">
 
 export const UserFieldsFragmentDoc = gql`
@@ -383,4 +400,96 @@ export type CreateProjectMutationResult = ApolloReactCommon.MutationResult<Creat
 export type CreateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateProjectMutation,
   CreateProjectMutationVariables
+>
+export const ProjectDocument = gql`
+  query Project($id: ID!) {
+    project(id: $id) {
+      ...ProjectFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
+`
+
+/**
+ * __useProjectQuery__
+ *
+ * To run a query within a React component, call `useProjectQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProjectQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<ProjectQuery, ProjectQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<ProjectQuery, ProjectQueryVariables>(
+    ProjectDocument,
+    baseOptions
+  )
+}
+export function useProjectLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProjectQuery, ProjectQueryVariables>
+) {
+  return ApolloReactHooks.useLazyQuery<ProjectQuery, ProjectQueryVariables>(
+    ProjectDocument,
+    baseOptions
+  )
+}
+export type ProjectQueryHookResult = ReturnType<typeof useProjectQuery>
+export type ProjectLazyQueryHookResult = ReturnType<typeof useProjectLazyQuery>
+export type ProjectQueryResult = ApolloReactCommon.QueryResult<ProjectQuery, ProjectQueryVariables>
+export const UpdateProjectDocument = gql`
+  mutation UpdateProject($id: ID!, $input: ProjectInput!) {
+    updateProject(id: $id, input: $input) {
+      ...ProjectFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
+`
+export type UpdateProjectMutationFn = ApolloReactCommon.MutationFunction<
+  UpdateProjectMutation,
+  UpdateProjectMutationVariables
+>
+
+/**
+ * __useUpdateProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProjectMutation, { data, loading, error }] = useUpdateProjectMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateProjectMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdateProjectMutation,
+    UpdateProjectMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<UpdateProjectMutation, UpdateProjectMutationVariables>(
+    UpdateProjectDocument,
+    baseOptions
+  )
+}
+export type UpdateProjectMutationHookResult = ReturnType<typeof useUpdateProjectMutation>
+export type UpdateProjectMutationResult = ApolloReactCommon.MutationResult<UpdateProjectMutation>
+export type UpdateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdateProjectMutation,
+  UpdateProjectMutationVariables
 >

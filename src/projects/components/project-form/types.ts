@@ -1,4 +1,4 @@
 export type FormValues = {
   name: string
-  description?: string
+  description?: string | null
 }

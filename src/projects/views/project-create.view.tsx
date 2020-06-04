@@ -6,10 +6,9 @@ import { ProjectForm } from "../components"
 import { FormValues } from "../components/project-form/types"
 
 const ProjectCreateView = () => {
-  const history = useHistory()
-
   const [createProjectMutation] = useCreateProjectMutation()
-  const createProject = useCallback(async (values: FormValues) => {
+  const history = useHistory()
+  const handleSubmit = useCallback(async (values: FormValues) => {
     await createProjectMutation({ variables: { input: values } })
     history.push("/projects")
   }, [])
@@ -17,7 +16,7 @@ const ProjectCreateView = () => {
   return (
     <>
       <Title variant={"h2"}>Create new project</Title>
-      <ProjectForm onSubmit={createProject} />
+      <ProjectForm submitLabel={"Create"} onSubmit={handleSubmit} />
     </>
   )
 }

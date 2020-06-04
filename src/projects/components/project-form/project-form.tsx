@@ -5,10 +5,14 @@ import { FormValues } from "./types"
 
 type Props = {
   onSubmit: (values: FormValues) => void
+  defaultValues?: FormValues
+  submitLabel: string
 }
 
-const ProjectForm = ({ onSubmit }: Props) => {
-  const { register, handleSubmit } = useForm<FormValues>()
+const ProjectForm = ({ onSubmit, defaultValues, submitLabel }: Props) => {
+  const { register, handleSubmit } = useForm<FormValues>({
+    defaultValues,
+  })
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input name={"name"} label={"Name"} inputRef={register} fullWidth />
@@ -19,7 +23,7 @@ const ProjectForm = ({ onSubmit }: Props) => {
         rows={10}
         fullWidth
       />
-      <Button>Create</Button>
+      <Button>{submitLabel}</Button>
     </form>
   )
 }
