@@ -1,13 +1,17 @@
-import React, { ButtonHTMLAttributes, ReactNode } from "react"
+import React, { ReactNode } from "react"
 import { ButtonWrapper, Variant } from "./styles"
 
-type Props = { children: ReactNode; variant?: Variant } & Pick<
-  ButtonHTMLAttributes<unknown>,
-  "type" | "disabled"
+type Props = { children: ReactNode; variant?: Variant } & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
 >
 
-const Button = ({ children, variant }: Props) => {
-  return <ButtonWrapper variant={variant ?? "default"}>{children}</ButtonWrapper>
+const Button = ({ children, variant, onClick }: Props) => {
+  return (
+    <ButtonWrapper onClick={onClick} variant={variant ?? "default"}>
+      {children}
+    </ButtonWrapper>
+  )
 }
 
 export default Button
