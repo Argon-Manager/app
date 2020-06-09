@@ -29,6 +29,7 @@ export type Mutation = {
   createProject: Project
   updateProject?: Maybe<Project>
   deleteProject?: Maybe<Scalars["Int"]>
+  createTask?: Maybe<Task>
 }
 
 export type MutationRegisterArgs = {
@@ -50,6 +51,10 @@ export type MutationUpdateProjectArgs = {
 
 export type MutationDeleteProjectArgs = {
   id: Scalars["ID"]
+}
+
+export type MutationCreateTaskArgs = {
+  input: TaskInput
 }
 
 export type Auth = {
@@ -80,6 +85,24 @@ export type ProjectInput = {
   name: Scalars["String"]
   description?: Maybe<Scalars["String"]>
   userIds?: Maybe<Array<Scalars["ID"]>>
+}
+
+export type Task = {
+  __typename?: "Task"
+  id: Scalars["ID"]
+  name: Scalars["String"]
+  projectId: Scalars["ID"]
+  project: Project
+  description?: Maybe<Scalars["String"]>
+  assignedId?: Maybe<Scalars["ID"]>
+  assigned?: Maybe<User>
+}
+
+export type TaskInput = {
+  name: Scalars["String"]
+  projectId: Scalars["ID"]
+  description?: Maybe<Scalars["String"]>
+  assignedId?: Maybe<Scalars["ID"]>
 }
 
 export type User = {
@@ -158,6 +181,22 @@ export type UpdateProjectMutation = { __typename?: "Mutation" } & {
   updateProject?: Maybe<{ __typename?: "Project" } & ProjectFieldsFragment>
 }
 
+export type CreateTaskMutationVariables = {
+  input: TaskInput
+}
+
+export type CreateTaskMutation = { __typename?: "Mutation" } & {
+  createTask?: Maybe<{ __typename?: "Task" } & TaskFieldsFragment>
+}
+
+export type TaskFieldsFragment = { __typename?: "Task" } & Pick<
+  Task,
+  "id" | "name" | "description" | "assignedId" | "projectId"
+> & {
+    assigned?: Maybe<{ __typename?: "User" } & UserFieldsFragment>
+    project: { __typename?: "Project" } & ProjectFieldsFragment
+  }
+
 export type UserFieldsFragment = { __typename?: "User" } & Pick<User, "id" | "email">
 
 export const UserFieldsFragmentDoc = gql`
@@ -176,6 +215,23 @@ export const ProjectFieldsFragmentDoc = gql`
     }
   }
   ${UserFieldsFragmentDoc}
+`
+export const TaskFieldsFragmentDoc = gql`
+  fragment TaskFields on Task {
+    id
+    name
+    description
+    assigned {
+      ...UserFields
+    }
+    assignedId
+    project {
+      ...ProjectFields
+    }
+    projectId
+  }
+  ${UserFieldsFragmentDoc}
+  ${ProjectFieldsFragmentDoc}
 `
 export const LoginDocument = gql`
   mutation Login($input: LoginInput!) {
@@ -542,4 +598,51 @@ export type UpdateProjectMutationResult = ApolloReactCommon.MutationResult<Updat
 export type UpdateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
   UpdateProjectMutation,
   UpdateProjectMutationVariables
+>
+export const CreateTaskDocument = gql`
+  mutation CreateTask($input: TaskInput!) {
+    createTask(input: $input) {
+      ...TaskFields
+    }
+  }
+  ${TaskFieldsFragmentDoc}
+`
+export type CreateTaskMutationFn = ApolloReactCommon.MutationFunction<
+  CreateTaskMutation,
+  CreateTaskMutationVariables
+>
+
+/**
+ * __useCreateTaskMutation__
+ *
+ * To run a mutation, you first call `useCreateTaskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTaskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTaskMutation, { data, loading, error }] = useCreateTaskMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTaskMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateTaskMutation,
+    CreateTaskMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<CreateTaskMutation, CreateTaskMutationVariables>(
+    CreateTaskDocument,
+    baseOptions
+  )
+}
+export type CreateTaskMutationHookResult = ReturnType<typeof useCreateTaskMutation>
+export type CreateTaskMutationResult = ApolloReactCommon.MutationResult<CreateTaskMutation>
+export type CreateTaskMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateTaskMutation,
+  CreateTaskMutationVariables
 >

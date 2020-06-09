@@ -1,6 +1,6 @@
 import React from "react"
 import { useForm } from "react-hook-form"
-import { Button, Input } from "../../../app/components"
+import { Button, Input } from "../../../app"
 import { FormData } from "./types"
 
 type Props = {

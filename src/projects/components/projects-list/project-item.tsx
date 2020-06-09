@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { Dropdown } from "../../../app"
 import { Project, useDeleteProjectMutation } from "../../../generated/graphql"
 import { ProjectItemWrapper } from "./styles"
 
@@ -13,17 +14,20 @@ const ProjectItem = ({ item }: Props) => {
   return (
     <ProjectItemWrapper>
       <header>
-        <h3>{item.name}</h3>
+        <h3>
+          <Link to={`/projects/${item.id}/dashboard`}>{item.name}</Link>
+        </h3>
       </header>
       <p>{item.description}</p>
-      <div>
-        <ul>
-          <li>
-            <Link to={`/projects/update/${item.id}`}>Update</Link>
-          </li>
-          <li onClick={() => deleteProjectMutation({ variables: { id: item.id } })}>Delete</li>
-        </ul>
-      </div>
+      <Dropdown
+        label={"..."}
+        items={[
+          <Link to={`/projects/update/${item.id}`}>Update</Link>,
+          <button onClick={() => deleteProjectMutation({ variables: { id: item.id } })}>
+            Delete
+          </button>,
+        ]}
+      />
     </ProjectItemWrapper>
   )
 }

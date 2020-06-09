@@ -1,5 +1,5 @@
 import React from "react"
-import { ApolloProvider, AppView, ThemeProvider } from "./app"
+import { ApolloProvider, AppView, ModalProvider, ThemeProvider } from "./app"
 import { AuthProvider, getAuth } from "./auth"
 
 const Root = () => {
@@ -7,7 +7,9 @@ const Root = () => {
     <ApolloProvider>
       <ThemeProvider>
         <AuthProvider initialValue={getAuth()}>
-          <AppView />
+          <ModalProvider>
+            <AppView />
+          </ModalProvider>
         </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>

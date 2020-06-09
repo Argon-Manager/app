@@ -4,18 +4,32 @@ export const ProjectsListWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-wrap: break-word;
 `
 
 export const ProjectItemWrapper = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  position: relative;
+
   height: 100px;
   padding: 15px;
 
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-
-  border: solid 1px black;
+  border: solid 1px #ccc;
   border-radius: 3px;
 
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+  overflow: hidden;
+
+  & > p {
+    width: 100%;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
 `

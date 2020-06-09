@@ -1,0 +1,13 @@
+fragment TaskFields on Task {
+  id
+  name
+  description
+  assigned {
+    ...UserFields
+  }
+  assignedId
+  project {
+    ...ProjectFields
+  }
+  projectId
+}

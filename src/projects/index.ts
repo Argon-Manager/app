@@ -1,1 +1,1 @@
-export { ProjectsView, ProjectCreateView, ProjectUpdateView } from "./views"
+export { ProjectsView, ProjectCreateView, ProjectUpdateView, ProjectView } from "./views"
