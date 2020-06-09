@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import { useParams } from "react-router-dom"
 import { useModal } from "../../app"
-import { useCreateTaskMutation } from "../../generated/graphql"
+import { useCreateTaskMutation, useTasksQuery } from "../../generated/graphql"
 import { TaskForm } from "../components"
 import { FormData } from "../components/task-form/types"
 
@@ -17,6 +17,8 @@ const BacklogView = () => {
     setModal(undefined)
   }, [])
 
+  const { data } = useTasksQuery({ variables: { projectId: id } })
+
   return (
     <div>
       Backlog view
@@ -29,6 +31,11 @@ const BacklogView = () => {
       >
         create task
       </button>
+      <ul>
+        {data?.tasks?.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
     </div>
   )
 }

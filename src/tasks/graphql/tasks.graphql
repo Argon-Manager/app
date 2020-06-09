@@ -1,0 +1,5 @@
+query Tasks ($projectId: ID!) {
+  tasks(projectId: $projectId) {
+    ...TaskFields
+  }
+}
