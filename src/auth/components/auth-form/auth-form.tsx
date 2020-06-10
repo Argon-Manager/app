@@ -1,7 +1,7 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { Button, Input } from "../../../app"
-import { FormData } from "./types"
+import { FormValues } from "./types"
 
 type Props = {
   onSubmit: any
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const AuthForm = ({ onSubmit, type }: Props) => {
-  const { register: registerInput, handleSubmit } = useForm<FormData>()
+  const { register: registerInput, handleSubmit } = useForm<FormValues>()
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

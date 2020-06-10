@@ -1,5 +1,5 @@
 import React, { useCallback } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { Button, Title, useModal } from "../../app"
 import { useCreateTaskMutation, useTasksQuery } from "../../generated/graphql"
 import { TaskForm, TasksList } from "../components"
@@ -33,7 +33,7 @@ const BacklogView = () => {
           Create
         </Button>
       </header>
-      <TasksList data={data?.tasks} />
+      {data?.tasks && <TasksList data={data.tasks} />}
     </>
   )
 }

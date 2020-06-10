@@ -1,4 +1,5 @@
-import React, { ReactNode, useCallback, useState } from "react"
+import React, { ReactNode, useCallback, useRef, useState } from "react"
+import { useClickAway } from "react-use"
 import { DropdownWrapper } from "./styles"
 
 type Props = {
@@ -12,14 +13,19 @@ const Dropdown = ({ label, items }: Props) => {
     setOpen((prevState) => !prevState)
   }, [open])
 
+  const ref = useRef(null)
+  useClickAway(ref, () => {
+    setOpen(false)
+  })
+
   return (
-    <DropdownWrapper>
-      <button onClick={handleClick}>{label}</button>
-      <ul className={open ? `dropdown__open` : ""}>
+    <DropdownWrapper ref={ref}>
+      <span onClick={handleClick}>{label}</span>
+      <div className={open ? `dropdown__open` : ""}>
         {items.map((item) => (
-          <li>{item}</li>
+          <div>{item}</div>
         ))}
-      </ul>
+      </div>
     </DropdownWrapper>
   )
 }

@@ -4,12 +4,13 @@ import { TypographyWrapper, Variant } from "./styles"
 type Props = {
   children: ReactNode
   variant?: Variant
+  className?: string
 }
 
-const Typography = ({ children, variant }: Props) => {
+const Typography = ({ children, variant, className }: Props) => {
   return (
     <TypographyWrapper variant={variant ?? "body"}>
-      <p>{children}</p>
+      <p className={className}>{children}</p>
     </TypographyWrapper>
   )
 }

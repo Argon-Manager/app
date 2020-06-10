@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 import { Title, Typography } from "../../app/components"
 import { useRegisterMutation } from "../../generated/graphql"
 import { AuthForm } from "../components"
-import { FormData } from "../components/auth-form/types"
+import { FormValues } from "../components/auth-form/types"
 import { useAuth } from "../lib"
 
 const RegistrationView = () => {
@@ -10,7 +10,7 @@ const RegistrationView = () => {
 
   const [registerMutation] = useRegisterMutation()
 
-  const handleSubmit = useCallback(async (values: FormData) => {
+  const handleSubmit = useCallback(async (values: FormValues) => {
     const { data } = await registerMutation({ variables: { input: values } })
     data && setAuth(data?.register!)
   }, [])

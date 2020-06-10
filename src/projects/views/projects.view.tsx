@@ -15,7 +15,7 @@ const ProjectsView = () => {
           <Button>Create</Button>
         </Link>
       </header>
-      <ProjectsList data={data?.authUserProjects} />
+      {data?.authUserProjects && <ProjectsList data={data.authUserProjects} />}
     </>
   )
 }

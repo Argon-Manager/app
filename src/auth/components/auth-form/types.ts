@@ -1,1 +1,1 @@
-export type FormData = { email: string; password: string }
+export type FormValues = { email: string; password: string }
