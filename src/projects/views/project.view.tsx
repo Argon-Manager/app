@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import { Title, Typography } from "../../app/components"
+import { Title, Typography } from "../../app"
 import { useProjectQuery } from "../../generated/graphql"
 
 const ProjectView = () => {

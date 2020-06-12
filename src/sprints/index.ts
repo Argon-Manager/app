@@ -1,1 +1,1 @@
-export { default as SprintsView } from "./views"
+export { SprintsView, SprintView } from "./views"

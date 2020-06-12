@@ -1,0 +1,5 @@
+query Sprint ($id: ID!) {
+  sprint (id: $id) {
+    ...SprintFields
+  }
+}

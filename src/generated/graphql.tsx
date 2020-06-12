@@ -272,6 +272,14 @@ export type SprintFieldsFragment = { __typename?: "Sprint" } & Pick<
     users: Array<{ __typename?: "User" } & UserFieldsFragment>
   }
 
+export type SprintQueryVariables = {
+  id: Scalars["ID"]
+}
+
+export type SprintQuery = { __typename?: "Query" } & {
+  sprint?: Maybe<{ __typename?: "Sprint" } & SprintFieldsFragment>
+}
+
 export type SprintsQueryVariables = {
   projectId: Scalars["ID"]
 }
@@ -771,6 +779,47 @@ export type CreateSprintMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateSprintMutation,
   CreateSprintMutationVariables
 >
+export const SprintDocument = gql`
+  query Sprint($id: ID!) {
+    sprint(id: $id) {
+      ...SprintFields
+    }
+  }
+  ${SprintFieldsFragmentDoc}
+`
+
+/**
+ * __useSprintQuery__
+ *
+ * To run a query within a React component, call `useSprintQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSprintQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSprintQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSprintQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<SprintQuery, SprintQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<SprintQuery, SprintQueryVariables>(SprintDocument, baseOptions)
+}
+export function useSprintLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SprintQuery, SprintQueryVariables>
+) {
+  return ApolloReactHooks.useLazyQuery<SprintQuery, SprintQueryVariables>(
+    SprintDocument,
+    baseOptions
+  )
+}
+export type SprintQueryHookResult = ReturnType<typeof useSprintQuery>
+export type SprintLazyQueryHookResult = ReturnType<typeof useSprintLazyQuery>
+export type SprintQueryResult = ApolloReactCommon.QueryResult<SprintQuery, SprintQueryVariables>
 export const SprintsDocument = gql`
   query Sprints($projectId: ID!) {
     sprints(projectId: $projectId) {
