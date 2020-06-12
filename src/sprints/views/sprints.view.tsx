@@ -2,8 +2,8 @@ import React, { useCallback } from "react"
 import { useParams } from "react-router-dom"
 import { Button, Title } from "../../app/components"
 import { useModal } from "../../app"
-import { useCreateSprintMutation } from "../../generated/graphql"
-import { SprintForm } from "../components"
+import { useCreateSprintMutation, useSprintsQuery } from "../../generated/graphql"
+import { SprintForm, SprintsList } from "../components"
 import { FormData } from "../components/sprint-form/types"
 
 const SprintsView = () => {
@@ -16,6 +16,8 @@ const SprintsView = () => {
       variables: { input: { ...data, projectId, active: false } },
     })
   }, [])
+
+  const { data } = useSprintsQuery({ variables: { projectId } })
 
   return (
     <>
@@ -30,6 +32,7 @@ const SprintsView = () => {
         >
           Create
         </Button>
+        {data && <SprintsList data={data["sprints"]} projectId={parseInt(projectId)} />}
       </header>
     </>
   )

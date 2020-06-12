@@ -272,6 +272,14 @@ export type SprintFieldsFragment = { __typename?: "Sprint" } & Pick<
     users: Array<{ __typename?: "User" } & UserFieldsFragment>
   }
 
+export type SprintsQueryVariables = {
+  projectId: Scalars["ID"]
+}
+
+export type SprintsQuery = { __typename?: "Query" } & {
+  sprints: Array<{ __typename?: "Sprint" } & SprintFieldsFragment>
+}
+
 export type CreateTaskMutationVariables = {
   input: TaskInput
 }
@@ -763,6 +771,50 @@ export type CreateSprintMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateSprintMutation,
   CreateSprintMutationVariables
 >
+export const SprintsDocument = gql`
+  query Sprints($projectId: ID!) {
+    sprints(projectId: $projectId) {
+      ...SprintFields
+    }
+  }
+  ${SprintFieldsFragmentDoc}
+`
+
+/**
+ * __useSprintsQuery__
+ *
+ * To run a query within a React component, call `useSprintsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSprintsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSprintsQuery({
+ *   variables: {
+ *      projectId: // value for 'projectId'
+ *   },
+ * });
+ */
+export function useSprintsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<SprintsQuery, SprintsQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<SprintsQuery, SprintsQueryVariables>(
+    SprintsDocument,
+    baseOptions
+  )
+}
+export function useSprintsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SprintsQuery, SprintsQueryVariables>
+) {
+  return ApolloReactHooks.useLazyQuery<SprintsQuery, SprintsQueryVariables>(
+    SprintsDocument,
+    baseOptions
+  )
+}
+export type SprintsQueryHookResult = ReturnType<typeof useSprintsQuery>
+export type SprintsLazyQueryHookResult = ReturnType<typeof useSprintsLazyQuery>
+export type SprintsQueryResult = ApolloReactCommon.QueryResult<SprintsQuery, SprintsQueryVariables>
 export const CreateTaskDocument = gql`
   mutation CreateTask($input: TaskInput!) {
     createTask(input: $input) {

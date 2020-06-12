@@ -1,0 +1,5 @@
+query Sprints ($projectId: ID!) {
+  sprints (projectId: $projectId) {
+    ...SprintFields
+  }
+}
