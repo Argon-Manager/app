@@ -5,7 +5,7 @@ import { AuthUserProjectsQuery, useDeleteProjectMutation } from "../../../genera
 import { ProjectDescription, ProjectsListWrapper } from "./styles"
 
 type Props = {
-  data: NonNullable<AuthUserProjectsQuery["authUserProjects"]>
+  data: AuthUserProjectsQuery["authUserProjects"]
 }
 
 const ProjectsList = ({ data }: Props) => {

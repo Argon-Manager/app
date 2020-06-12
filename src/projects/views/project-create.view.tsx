@@ -3,12 +3,12 @@ import { useHistory } from "react-router-dom"
 import { Title } from "../../app"
 import { useCreateProjectMutation } from "../../generated/graphql"
 import { ProjectForm } from "../components"
-import { FormValues } from "../components/project-form/types"
+import { FormData } from "../components/project-form/types"
 
 const ProjectCreateView = () => {
   const [createProjectMutation] = useCreateProjectMutation()
   const history = useHistory()
-  const handleSubmit = useCallback(async (values: FormValues) => {
+  const handleSubmit = useCallback(async (values: FormData) => {
     await createProjectMutation({ variables: { input: values } })
     history.push("/projects")
   }, [])

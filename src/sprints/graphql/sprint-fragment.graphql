@@ -1,0 +1,14 @@
+fragment SprintFields on Sprint {
+  id
+  name
+  active
+  description
+  projectId
+  workspaceId
+  project {
+    ...ProjectFields
+  }
+  users {
+    ...UserFields
+  }
+}

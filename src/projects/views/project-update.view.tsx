@@ -2,24 +2,24 @@ import React, { useCallback } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { useProjectQuery, useUpdateProjectMutation } from "../../generated/graphql"
 import { ProjectForm } from "../components"
-import { FormValues } from "../components/project-form/types"
+import { FormData } from "../components/project-form/types"
 import { serializeProjectData } from "../lib"
 
 const ProjectUpdateView = () => {
-  const { id } = useParams<{ id: string }>()
-  const { data } = useProjectQuery({ variables: { id } })
+  const { projectId } = useParams<{ projectId: string }>()
+  const { data } = useProjectQuery({ variables: { id: projectId } })
 
   const [updateProjectMutation] = useUpdateProjectMutation()
   const history = useHistory()
   const handleSubmit = useCallback(
-    async (values: FormValues) => {
-      await updateProjectMutation({ variables: { id, input: values } })
+    async (values: FormData) => {
+      await updateProjectMutation({ variables: { id: projectId, input: values } })
       history.push("/projects")
     },
-    [id]
+    [projectId]
   )
 
-  if (!data) {
+  if (!data?.project) {
     return null
   }
 

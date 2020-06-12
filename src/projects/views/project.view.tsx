@@ -4,17 +4,17 @@ import { Title, Typography } from "../../app/components"
 import { useProjectQuery } from "../../generated/graphql"
 
 const ProjectView = () => {
-  const { id } = useParams<{ id: string }>()
-  const { data } = useProjectQuery({ variables: { id } })
+  const { projectId } = useParams<{ projectId: string }>()
+  const { data } = useProjectQuery({ variables: { id: projectId } })
 
-  if (!data) {
+  if (!data?.project) {
     return null
   }
 
   return (
     <>
-      <Title variant={"h3"}>{data.project?.name}</Title>
-      <Typography>{data.project?.description}</Typography>
+      <Title variant={"h3"}>{data.project.name}</Title>
+      <Typography>{data.project.description}</Typography>
     </>
   )
 }

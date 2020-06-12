@@ -15,16 +15,36 @@ export type Query = {
   __typename?: "Query"
   me?: Maybe<User>
   project?: Maybe<Project>
-  authUserProjects?: Maybe<Array<Project>>
-  tasks?: Maybe<Array<Task>>
+  authUserProjects: Array<Project>
+  sprints: Array<Sprint>
+  sprint?: Maybe<Sprint>
+  tasks: Array<Task>
+  workspaces: Array<Workspace>
+  workspace?: Maybe<Workspace>
 }
 
 export type QueryProjectArgs = {
   id: Scalars["ID"]
 }
 
+export type QuerySprintsArgs = {
+  projectId: Scalars["ID"]
+}
+
+export type QuerySprintArgs = {
+  id: Scalars["ID"]
+}
+
 export type QueryTasksArgs = {
   projectId: Scalars["ID"]
+}
+
+export type QueryWorkspacesArgs = {
+  projectId: Scalars["ID"]
+}
+
+export type QueryWorkspaceArgs = {
+  id: Scalars["ID"]
 }
 
 export type Mutation = {
@@ -34,7 +54,9 @@ export type Mutation = {
   createProject: Project
   updateProject?: Maybe<Project>
   deleteProject?: Maybe<Scalars["Int"]>
-  createTask?: Maybe<Task>
+  createSprint: Sprint
+  createTask: Task
+  createWorkspace: Workspace
 }
 
 export type MutationRegisterArgs = {
@@ -58,8 +80,16 @@ export type MutationDeleteProjectArgs = {
   id: Scalars["ID"]
 }
 
+export type MutationCreateSprintArgs = {
+  input: SprintInput
+}
+
 export type MutationCreateTaskArgs = {
   input: TaskInput
+}
+
+export type MutationCreateWorkspaceArgs = {
+  input: WorkspaceInput
 }
 
 export type Auth = {
@@ -83,12 +113,35 @@ export type Project = {
   id: Scalars["ID"]
   name: Scalars["String"]
   description?: Maybe<Scalars["String"]>
-  users?: Maybe<Array<Maybe<User>>>
+  users: Array<User>
 }
 
 export type ProjectInput = {
   name: Scalars["String"]
   description?: Maybe<Scalars["String"]>
+  userIds?: Maybe<Array<Scalars["ID"]>>
+}
+
+export type Sprint = {
+  __typename?: "Sprint"
+  id: Scalars["ID"]
+  name: Scalars["String"]
+  description?: Maybe<Scalars["String"]>
+  active: Scalars["Boolean"]
+  projectId: Scalars["ID"]
+  project: Project
+  workspaceId?: Maybe<Scalars["ID"]>
+  workspace?: Maybe<Workspace>
+  tasks: Array<Task>
+  users: Array<User>
+}
+
+export type SprintInput = {
+  name: Scalars["String"]
+  description?: Maybe<Scalars["String"]>
+  active: Scalars["Boolean"]
+  projectId: Scalars["ID"]
+  workspaceId?: Maybe<Scalars["ID"]>
   userIds?: Maybe<Array<Scalars["ID"]>>
 }
 
@@ -114,6 +167,23 @@ export type User = {
   __typename?: "User"
   id: Scalars["ID"]
   email: Scalars["String"]
+}
+
+export type Workspace = {
+  __typename?: "Workspace"
+  id: Scalars["ID"]
+  name: Scalars["String"]
+  description?: Maybe<Scalars["String"]>
+  projectId: Scalars["ID"]
+  project: Project
+  users: Array<User>
+}
+
+export type WorkspaceInput = {
+  name: Scalars["String"]
+  description?: Maybe<Scalars["String"]>
+  projectId: Scalars["ID"]
+  userIds?: Maybe<Array<Scalars["ID"]>>
 }
 
 export type LoginMutationVariables = {
@@ -147,7 +217,7 @@ export type RegisterMutation = { __typename?: "Mutation" } & {
 export type AuthUserProjectsQueryVariables = {}
 
 export type AuthUserProjectsQuery = { __typename?: "Query" } & {
-  authUserProjects?: Maybe<Array<{ __typename?: "Project" } & ProjectFieldsFragment>>
+  authUserProjects: Array<{ __typename?: "Project" } & ProjectFieldsFragment>
 }
 
 export type CreateProjectMutationVariables = {
@@ -167,7 +237,7 @@ export type DeleteProjectMutation = { __typename?: "Mutation" } & Pick<Mutation,
 export type ProjectFieldsFragment = { __typename?: "Project" } & Pick<
   Project,
   "id" | "name" | "description"
-> & { users?: Maybe<Array<Maybe<{ __typename?: "User" } & UserFieldsFragment>>> }
+> & { users: Array<{ __typename?: "User" } & UserFieldsFragment> }
 
 export type ProjectQueryVariables = {
   id: Scalars["ID"]
@@ -186,12 +256,28 @@ export type UpdateProjectMutation = { __typename?: "Mutation" } & {
   updateProject?: Maybe<{ __typename?: "Project" } & ProjectFieldsFragment>
 }
 
+export type CreateSprintMutationVariables = {
+  input: SprintInput
+}
+
+export type CreateSprintMutation = { __typename?: "Mutation" } & {
+  createSprint: { __typename?: "Sprint" } & SprintFieldsFragment
+}
+
+export type SprintFieldsFragment = { __typename?: "Sprint" } & Pick<
+  Sprint,
+  "id" | "name" | "active" | "description" | "projectId" | "workspaceId"
+> & {
+    project: { __typename?: "Project" } & ProjectFieldsFragment
+    users: Array<{ __typename?: "User" } & UserFieldsFragment>
+  }
+
 export type CreateTaskMutationVariables = {
   input: TaskInput
 }
 
 export type CreateTaskMutation = { __typename?: "Mutation" } & {
-  createTask?: Maybe<{ __typename?: "Task" } & TaskFieldsFragment>
+  createTask: { __typename?: "Task" } & TaskFieldsFragment
 }
 
 export type TaskFieldsFragment = { __typename?: "Task" } & Pick<
@@ -207,7 +293,7 @@ export type TasksQueryVariables = {
 }
 
 export type TasksQuery = { __typename?: "Query" } & {
-  tasks?: Maybe<Array<{ __typename?: "Task" } & TaskFieldsFragment>>
+  tasks: Array<{ __typename?: "Task" } & TaskFieldsFragment>
 }
 
 export type UserFieldsFragment = { __typename?: "User" } & Pick<User, "id" | "email">
@@ -227,6 +313,24 @@ export const ProjectFieldsFragmentDoc = gql`
       ...UserFields
     }
   }
+  ${UserFieldsFragmentDoc}
+`
+export const SprintFieldsFragmentDoc = gql`
+  fragment SprintFields on Sprint {
+    id
+    name
+    active
+    description
+    projectId
+    workspaceId
+    project {
+      ...ProjectFields
+    }
+    users {
+      ...UserFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
   ${UserFieldsFragmentDoc}
 `
 export const TaskFieldsFragmentDoc = gql`
@@ -611,6 +715,53 @@ export type UpdateProjectMutationResult = ApolloReactCommon.MutationResult<Updat
 export type UpdateProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<
   UpdateProjectMutation,
   UpdateProjectMutationVariables
+>
+export const CreateSprintDocument = gql`
+  mutation CreateSprint($input: SprintInput!) {
+    createSprint(input: $input) {
+      ...SprintFields
+    }
+  }
+  ${SprintFieldsFragmentDoc}
+`
+export type CreateSprintMutationFn = ApolloReactCommon.MutationFunction<
+  CreateSprintMutation,
+  CreateSprintMutationVariables
+>
+
+/**
+ * __useCreateSprintMutation__
+ *
+ * To run a mutation, you first call `useCreateSprintMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSprintMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSprintMutation, { data, loading, error }] = useCreateSprintMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateSprintMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateSprintMutation,
+    CreateSprintMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<CreateSprintMutation, CreateSprintMutationVariables>(
+    CreateSprintDocument,
+    baseOptions
+  )
+}
+export type CreateSprintMutationHookResult = ReturnType<typeof useCreateSprintMutation>
+export type CreateSprintMutationResult = ApolloReactCommon.MutationResult<CreateSprintMutation>
+export type CreateSprintMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateSprintMutation,
+  CreateSprintMutationVariables
 >
 export const CreateTaskDocument = gql`
   mutation CreateTask($input: TaskInput!) {

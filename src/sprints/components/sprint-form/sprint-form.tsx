@@ -1,20 +1,15 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { Button, Input, Textarea } from "../../../app"
-import { Project } from "../../../generated/graphql"
 import { FormData } from "./types"
 
 type Props = {
-  onSubmit: (values: FormData) => void
-  defaultValues?: Pick<Project, "name" | "description">
+  onSubmit: (data: FormData) => void
   submitLabel: string
 }
 
-const ProjectForm = ({ onSubmit, defaultValues, submitLabel }: Props) => {
-  const { register, handleSubmit } = useForm<FormData>({
-    defaultValues,
-  })
-
+const SprintForm = ({ onSubmit, submitLabel }: Props) => {
+  const { register, handleSubmit } = useForm<FormData>()
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input name={"name"} label={"Name"} inputRef={register} fullWidth />
@@ -30,4 +25,4 @@ const ProjectForm = ({ onSubmit, defaultValues, submitLabel }: Props) => {
   )
 }
 
-export default ProjectForm
+export default SprintForm

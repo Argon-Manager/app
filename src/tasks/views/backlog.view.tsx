@@ -8,16 +8,16 @@ import { FormData } from "../components/task-form/types"
 const BacklogView = () => {
   const { setModal } = useModal()
 
-  const { id } = useParams<{ id: string }>()
+  const { projectId } = useParams<{ projectId: string }>()
 
   const [createTaskMutation] = useCreateTaskMutation()
 
   const handleSubmit = useCallback(async (values: FormData) => {
-    await createTaskMutation({ variables: { input: { ...values, projectId: id } } })
+    await createTaskMutation({ variables: { input: { ...values, projectId } } })
     setModal(undefined)
   }, [])
 
-  const { data } = useTasksQuery({ variables: { projectId: id } })
+  const { data } = useTasksQuery({ variables: { projectId } })
 
   return (
     <>

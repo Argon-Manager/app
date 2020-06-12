@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 import { AuthChecker, LoginView, RegistrationView, useAuth } from "../../auth"
 import { useMeQuery } from "../../generated/graphql"
 import { ProjectCreateView, ProjectsView, ProjectUpdateView, ProjectView } from "../../projects"
+import { SprintsView } from "../../sprints"
 import { BacklogView } from "../../tasks"
 import { AppLayout, GeneralLayout, Modals } from "../components"
 
@@ -45,19 +46,22 @@ const AppView = () => {
                     <Route path={"/projects"} exact>
                       <ProjectsView />
                     </Route>
-                    <Route path={"/projects/update/:id"} exact>
+                    <Route path={"/projects/update/:projectId"} exact>
                       <ProjectUpdateView />
                     </Route>
                     <Route path={"/projects/create"} exact>
                       <ProjectCreateView />
                     </Route>
-                    <Route path={"/projects/:id"}>
+                    <Route path={"/projects/:projectId"}>
                       <Switch>
-                        <Route path={"/projects/:id"} exact>
+                        <Route path={"/projects/:projectId"} exact>
                           <ProjectView />
                         </Route>
-                        <Route path={"/projects/:id/backlog"} exact>
+                        <Route path={"/projects/:projectId/backlog"} exact>
                           <BacklogView />
+                        </Route>
+                        <Route path={"/projects/:projectId/sprints"} exact>
+                          <SprintsView />
                         </Route>
                       </Switch>
                     </Route>

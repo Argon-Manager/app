@@ -1,4 +1,3 @@
-export type FormValues = {
-  name: string
-  description?: string | null
-}
+import { Project } from "../../../generated/graphql"
+
+export type FormData = Pick<Project, "name" | "description">

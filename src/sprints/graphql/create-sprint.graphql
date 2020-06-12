@@ -1,0 +1,5 @@
+mutation CreateSprint($input: SprintInput!) {
+  createSprint(input: $input) {
+    ...SprintFields
+  }
+}
