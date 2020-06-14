@@ -1,0 +1,5 @@
+query Workspaces($projectId: ID!) {
+  workspaces(projectId: $projectId) {
+    ...WorkspaceFields
+  }
+}

@@ -1,15 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { Card, CardActions, Dropdown, Typography } from "../../../app"
-import { SprintsQuery, useDeleteProjectMutation } from "../../../generated/graphql"
+import { useDeleteProjectMutation, WorkspacesQuery } from "../../../generated/graphql"
 import { ProjectDescription, ProjectsListWrapper } from "./styles"
 
 type Props = {
-  data: SprintsQuery["sprints"]
+  data: WorkspacesQuery["workspaces"]
   projectId: number
 }
 
-const SprintsList = ({ data, projectId }: Props) => {
+const WorkspacesList = ({ data, projectId }: Props) => {
   const [deleteProjectMutation] = useDeleteProjectMutation()
 
   return (
@@ -17,14 +17,14 @@ const SprintsList = ({ data, projectId }: Props) => {
       {data.map((item) => (
         <Card>
           <Typography variant={"subtitle"}>
-            <Link to={`/projects/${projectId}/sprints/${item.id}`}>{item.name}</Link>
+            <Link to={`/projects/${projectId}/workspaces/${item.id}`}>{item.name}</Link>
           </Typography>
           {item.description && <ProjectDescription>{item.description}</ProjectDescription>}
           <CardActions>
             <Dropdown
               label={"..."}
               items={[
-                <Link to={`/projects/${projectId}/sprints/update/${item.id}`}>Update</Link>,
+                <Link to={`/projects/${projectId}/workspaces/update/${item.id}`}>Update</Link>,
                 <span onClick={() => deleteProjectMutation({ variables: { id: item.id } })}>
                   Delete
                 </span>,
@@ -37,4 +37,4 @@ const SprintsList = ({ data, projectId }: Props) => {
   )
 }
 
-export default SprintsList
+export default WorkspacesList

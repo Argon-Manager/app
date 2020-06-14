@@ -1,8 +1,8 @@
 import React, { useCallback } from "react"
 import { useParams } from "react-router-dom"
 import { Button, Title, useModal } from "../../app"
-import { useCreateWorkspaceMutation } from "../../generated/graphql"
-import { WorkspaceForm } from "../components"
+import { useCreateWorkspaceMutation, useWorkspacesQuery } from "../../generated/graphql"
+import { WorkspaceForm, WorkspacesList } from "../components"
 import { FormData } from "../components/workspace-form/types"
 
 const WorkspacesView = () => {
@@ -13,6 +13,8 @@ const WorkspacesView = () => {
   const handleSubmit = useCallback(async (values: FormData) => {
     await createWorkspaceMutation({ variables: { input: { ...values, projectId } } })
   }, [])
+
+  const { data } = useWorkspacesQuery({ variables: { projectId } })
 
   return (
     <>
@@ -28,6 +30,9 @@ const WorkspacesView = () => {
           Create
         </Button>
       </header>
+      {data?.workspaces && (
+        <WorkspacesList data={data.workspaces} projectId={parseInt(projectId)} />
+      )}
     </>
   )
 }
