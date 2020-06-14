@@ -1,1 +1,1 @@
-export { WorkspacesView } from "./views"
+export { WorkspacesView, WorkspaceView } from "./views"

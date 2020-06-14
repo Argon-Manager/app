@@ -5,7 +5,7 @@ import { useMeQuery } from "../../generated/graphql"
 import { ProjectCreateView, ProjectsView, ProjectUpdateView, ProjectView } from "../../projects"
 import { SprintsView, SprintView } from "../../sprints"
 import { BacklogView } from "../../tasks"
-import { WorkspacesView } from "../../workspaces"
+import { WorkspacesView, WorkspaceView } from "../../workspaces"
 import { AppLayout, GeneralLayout, Modals } from "../components"
 
 const AppView = () => {
@@ -69,6 +69,9 @@ const AppView = () => {
                         </Route>
                         <Route path={"/projects/:projectId/workspaces"} exact>
                           <WorkspacesView />
+                        </Route>
+                        <Route path={"/projects/:projectId/workspaces/:workspaceId"} exact>
+                          <WorkspaceView />
                         </Route>
                       </Switch>
                     </Route>
