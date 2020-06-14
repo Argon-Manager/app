@@ -1,0 +1,12 @@
+fragment WorkspaceFields on Workspace {
+  id
+  name
+  description
+  projectId
+  project {
+    ...ProjectFields
+  }
+  users {
+    ...UserFields
+  }
+}

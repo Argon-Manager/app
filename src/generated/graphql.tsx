@@ -314,6 +314,22 @@ export type TasksQuery = { __typename?: "Query" } & {
 
 export type UserFieldsFragment = { __typename?: "User" } & Pick<User, "id" | "email">
 
+export type CreateWorkspaceMutationVariables = {
+  input: WorkspaceInput
+}
+
+export type CreateWorkspaceMutation = { __typename?: "Mutation" } & {
+  createWorkspace: { __typename?: "Workspace" } & WorkspaceFieldsFragment
+}
+
+export type WorkspaceFieldsFragment = { __typename?: "Workspace" } & Pick<
+  Workspace,
+  "id" | "name" | "description" | "projectId"
+> & {
+    project: { __typename?: "Project" } & ProjectFieldsFragment
+    users: Array<{ __typename?: "User" } & UserFieldsFragment>
+  }
+
 export const UserFieldsFragmentDoc = gql`
   fragment UserFields on User {
     id
@@ -365,6 +381,22 @@ export const TaskFieldsFragmentDoc = gql`
   }
   ${UserFieldsFragmentDoc}
   ${ProjectFieldsFragmentDoc}
+`
+export const WorkspaceFieldsFragmentDoc = gql`
+  fragment WorkspaceFields on Workspace {
+    id
+    name
+    description
+    projectId
+    project {
+      ...ProjectFields
+    }
+    users {
+      ...UserFields
+    }
+  }
+  ${ProjectFieldsFragmentDoc}
+  ${UserFieldsFragmentDoc}
 `
 export const LoginDocument = gql`
   mutation Login($input: LoginInput!) {
@@ -949,3 +981,52 @@ export function useTasksLazyQuery(
 export type TasksQueryHookResult = ReturnType<typeof useTasksQuery>
 export type TasksLazyQueryHookResult = ReturnType<typeof useTasksLazyQuery>
 export type TasksQueryResult = ApolloReactCommon.QueryResult<TasksQuery, TasksQueryVariables>
+export const CreateWorkspaceDocument = gql`
+  mutation CreateWorkspace($input: WorkspaceInput!) {
+    createWorkspace(input: $input) {
+      ...WorkspaceFields
+    }
+  }
+  ${WorkspaceFieldsFragmentDoc}
+`
+export type CreateWorkspaceMutationFn = ApolloReactCommon.MutationFunction<
+  CreateWorkspaceMutation,
+  CreateWorkspaceMutationVariables
+>
+
+/**
+ * __useCreateWorkspaceMutation__
+ *
+ * To run a mutation, you first call `useCreateWorkspaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateWorkspaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createWorkspaceMutation, { data, loading, error }] = useCreateWorkspaceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateWorkspaceMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateWorkspaceMutation,
+    CreateWorkspaceMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<CreateWorkspaceMutation, CreateWorkspaceMutationVariables>(
+    CreateWorkspaceDocument,
+    baseOptions
+  )
+}
+export type CreateWorkspaceMutationHookResult = ReturnType<typeof useCreateWorkspaceMutation>
+export type CreateWorkspaceMutationResult = ApolloReactCommon.MutationResult<
+  CreateWorkspaceMutation
+>
+export type CreateWorkspaceMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateWorkspaceMutation,
+  CreateWorkspaceMutationVariables
+>

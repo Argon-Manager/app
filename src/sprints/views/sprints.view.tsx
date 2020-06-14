@@ -32,8 +32,8 @@ const SprintsView = () => {
         >
           Create
         </Button>
-        {data && <SprintsList data={data["sprints"]} projectId={parseInt(projectId)} />}
       </header>
+      {data && <SprintsList data={data["sprints"]} projectId={parseInt(projectId)} />}
     </>
   )
 }

@@ -1,0 +1,5 @@
+mutation CreateWorkspace($input: WorkspaceInput!) {
+  createWorkspace(input: $input) {
+    ...WorkspaceFields
+  }
+}
